@@ -1,0 +1,89 @@
+<div class="cartBox">
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="">Start Date</label>
+                <input type="date" class="form-control" formControlName="start">
+            </div>
+            <div class="col-md-3">
+                <label for="">End Date</label>
+                <input type="date" class="form-control" formControlName="end">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button class="btn btn-success" (click)="ApplyFilter()">Apply changes</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Date</th>
+                <th>No.of unique Items</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of carts;let index=index">
+                <td></td>
+                <td>{{item.date | date}}</td>
+                <td>
+                    <div class="quantity">
+                        {{item.products.length}}
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteCart(item.id);getSum()">Delete</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" (click)="view(index)">
+                        View
+                    </button>
+                </td>
+                <div class="modal fade transparent-modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen-sm-down">
+                      <div class="modal-content mt-5">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Cart Details</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                          <!-- Modal content goes here -->
+                          <!-- <div class="d-flex" *ngFor="let product of cartProducts">
+                            <img style="width:40px" src="{{product.img}}"/>
+                            <p>Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday","category":"men's clothing</p>
+                            <span>109.95 L.E</span>
+                          </div> -->
+                          <div class="cartBox">
+                              <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of cartProducts;let i=index">
+                                        <td><img src={{item.item.image}}/></td>
+                                        <td>{{item.item.title}}</td>
+                                        <td>{{item.item.price}} L.E</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>{{item.item.price * item.quantity}} L.E</td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save Changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Full screen modal -->
